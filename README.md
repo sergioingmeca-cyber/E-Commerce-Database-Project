@@ -1,244 +1,241 @@
-# 🛒 E-Commerce Database Analysis | SQL & Business Intelligence
+# 🛒 Análisis de Base de Datos E-Commerce | SQL y Análisis de Negocio
 
-### From raw data to business insights
+### Transformando datos en decisiones estratégicas
 
 [![SQL](https://img.shields.io/badge/SQL-SQLite-07405E?style=for-the-badge\&logo=sqlite\&logoColor=white)](https://www.sqlite.org/)
-[![Python](https://img.shields.io/badge/Python-Data_Analysis-3776AB?style=for-the-badge\&logo=python\&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-Análisis_de_Datos-3776AB?style=for-the-badge\&logo=python\&logoColor=white)](https://www.python.org/)
 [![Google Colab](https://img.shields.io/badge/Google_Colab-Notebook-F9AB00?style=for-the-badge\&logo=googlecolab\&logoColor=white)](https://colab.research.google.com/)
 
-**Análisis de datos de comercio electrónico mediante SQL para identificar oportunidades de crecimiento, evaluar el comportamiento de los clientes y optimizar la gestión comercial y de inventario.**
+Proyecto de análisis de datos orientado a comprender el desempeño comercial de una empresa de comercio electrónico mediante consultas SQL, análisis de ventas, evaluación del comportamiento de los clientes y revisión de inventario.
 
-📓 **[Open in Google Colab](https://colab.research.google.com/github/sergioingmeca-cyber/E-Commerce-Database-Project/blob/main/E_Commerce_Database_Project.ipynb)** | 💻 **[View repository](https://github.com/sergioingmeca-cyber/E-Commerce-Database-Project)**
+📓 **[Abrir proyecto en Google Colab](https://colab.research.google.com/github/sergioingmeca-cyber/E-Commerce-Database-Project/blob/main/E_Commerce_Database_Project.ipynb)** | 💻 **[Ver repositorio en GitHub](https://github.com/sergioingmeca-cyber/E-Commerce-Database-Project)**
 
 ---
 
-## 🎯 1. Business Problem
+## 🎯 1. Problema de negocio
 
-An e-commerce company needs to understand what drives its revenue, which products and categories contribute the most to sales, which customers generate the highest value, and where inventory management can be improved.
+Una empresa de comercio electrónico necesita comprender qué factores impulsan sus ingresos, cuáles son los productos y categorías con mejor desempeño, qué clientes generan mayor valor y dónde existen oportunidades para mejorar la gestión del inventario.
 
-The challenge is to transform transactional data stored in a relational database into actionable insights that support commercial decision-making.
+El reto consiste en transformar los datos transaccionales almacenados en una base de datos relacional en información útil para la toma de decisiones comerciales.
 
-**Project objective:** use SQL to explore the database, calculate business KPIs, rank products and customers, evaluate repeat purchasing behavior, and identify opportunities to improve business performance.
+**Objetivo del proyecto:** utilizar SQL para explorar la base de datos, calcular indicadores clave de desempeño (KPI), identificar productos y clientes destacados, evaluar la tasa de recompra y proponer acciones orientadas a mejorar los resultados del negocio.
 
-## 🗂️ 2. Dataset Overview
+## 🗂️ 2. Descripción de los datos
 
-The project uses a SQLite database named `store.db`, structured into five main business tables.
+El proyecto utiliza una base de datos SQLite denominada `store.db`, organizada en cinco tablas principales.
 
-| Table         | Description                                            |
-| ------------- | ------------------------------------------------------ |
-| `customers`   | Customer information, location and signup date         |
-| `orders`      | Order identifiers, customers, dates and order status   |
-| `order_items` | Products purchased, quantities and unit prices         |
-| `products`    | Product names, categories, prices and stock quantities |
-| `categories`  | Product category names and identifiers                 |
+| Tabla         | Descripción                                                |
+| ------------- | ---------------------------------------------------------- |
+| `customers`   | Información de los clientes, ubicación y fecha de registro |
+| `orders`      | Identificadores de pedidos, clientes, fechas y estados     |
+| `order_items` | Productos comprados, cantidades y precios unitarios        |
+| `products`    | Nombres de productos, categorías, precios y existencias    |
+| `categories`  | Nombres e identificadores de las categorías de productos   |
 
-### Database scale
+### Dimensión de la base de datos
 
-| Metric                   | Records |
-| ------------------------ | ------: |
-| Customers                |     200 |
-| Orders                   |     800 |
-| Order items              |   2,456 |
-| Products                 |      70 |
-| Product categories       |       7 |
-| Customers with purchases |     197 |
+| Indicador            | Registros |
+| -------------------- | --------: |
+| Clientes registrados |       200 |
+| Pedidos              |       800 |
+| Líneas de pedido     |     2.456 |
+| Productos            |        70 |
+| Categorías           |         7 |
+| Clientes con compras |       197 |
 
-The analysis connects the tables through primary and foreign key relationships to consolidate transactional information and calculate business metrics.
+Las tablas se relacionaron mediante sus identificadores para consolidar la información transaccional y calcular indicadores comerciales.
 
-## 🔍 3. Business Questions
+## 🔎 3. Preguntas de negocio
 
-The analysis focuses on answering the following questions:
+El análisis se desarrolló para responder las siguientes preguntas:
 
-* How does monthly revenue evolve over time?
-* Which product categories generate the highest revenue?
-* Which products contribute the most and least to sales?
-* Who are the highest-value customers?
-* What is the customer repeat purchase rate?
-* Which products have the lowest inventory levels?
-* Which products rank highest within each category?
-* How concentrated is revenue among individual customers?
+* ¿Cómo evolucionan los ingresos mensuales?
+* ¿Qué categorías generan mayores ingresos?
+* ¿Qué productos tienen el mayor y menor ingreso por ventas?
+* ¿Quiénes son los clientes de mayor valor?
+* ¿Cuál es la tasa de recompra de los clientes?
+* ¿Qué productos tienen menores niveles de inventario?
+* ¿Cuáles son los tres productos con mayores ingresos dentro de cada categoría?
+* ¿Qué porcentaje de los ingresos representa cada cliente?
 
-## 🧠 4. SQL Techniques Applied
+## 🧠 4. Técnicas SQL aplicadas
 
-This project demonstrates practical SQL skills used in business and data analytics.
+El proyecto demuestra el uso de consultas SQL para resolver preguntas reales de negocio.
 
-### Data exploration
+### Exploración de datos
 
-* Listing tables through `sqlite_master`.
-* Exploring table structures and records.
-* Identifying the relationships between customers, orders, products and categories.
+* Identificación de las tablas disponibles mediante `sqlite_master`.
+* Exploración de la estructura y el contenido de las tablas.
+* Identificación de relaciones entre clientes, pedidos, productos y categorías.
 
-### Data aggregation
+### Agregación de datos
 
-* `SUM()` to calculate revenue and quantities sold.
-* `COUNT()` and `COUNT(DISTINCT ...)` to measure orders, customers and products.
-* `GROUP BY` to aggregate results by month, category, product and customer.
-* `ORDER BY` and `LIMIT` to identify top- and bottom-performing products.
+* `SUM()` para calcular ingresos y unidades vendidas.
+* `COUNT()` y `COUNT(DISTINCT ...)` para contar pedidos, clientes y productos.
+* `GROUP BY` para agrupar resultados por mes, categoría, producto y cliente.
+* `ORDER BY` y `LIMIT` para identificar productos con mayor y menor facturación.
 
-### Joining relational tables
+### Combinación de tablas
 
-The analysis uses multiple `JOIN` operations to combine transactional and descriptive data.
+Uso de `JOIN` para relacionar varias tablas y enriquecer el análisis. Por ejemplo, se conectaron los detalles de los pedidos con las tablas de productos y categorías para calcular los ingresos por categoría.
 
-For example, `order_items` is connected to `products` to identify the products sold, and then to `categories` to calculate revenue by category.
+### Expresiones de tabla comunes (CTE)
 
-### Common Table Expressions (CTEs)
+Uso de `WITH` para organizar consultas complejas en pasos más claros, especialmente en el análisis de ingresos por cliente y la clasificación de productos.
 
-`WITH` clauses organize complex queries into readable steps. They are used to calculate customer-level revenue and rank products before applying filters.
+### Funciones de ventana
 
-### Window functions
+* `RANK()` para clasificar productos dentro de cada categoría.
+* `SUM() OVER()` para calcular la participación porcentual de los clientes sobre los ingresos totales.
 
-`RANK()` and `SUM() OVER()` support more advanced analysis, including:
+### Funciones de fecha y tratamiento de valores nulos
 
-* Ranking products within each category.
-* Calculating customer revenue participation.
-* Identifying the top three products in each category.
+* `STRFTIME()` para agrupar los ingresos por año y mes.
+* `COALESCE()` para manejar valores nulos en las cantidades y los precios unitarios.
 
-### Date functions and null handling
+### Integración con Python
 
-* `STRFTIME()` to aggregate revenue by year and month.
-* `COALESCE()` to handle null values in quantity and unit-price calculations.
+Uso de `sqlite3` para conectar con la base de datos y de `pandas` para ejecutar consultas SQL y visualizar los resultados en Google Colab.
 
-### Python integration
+## 📊 5. Principales resultados
 
-Python and `sqlite3` connect to the database, while `pandas` executes SQL queries and displays the resulting datasets in Google Colab.
+### 5.1. Evolución de los ingresos
 
-## 📊 5. Key Business Findings
+* **Ingresos totales:** $875.798,71.
+* **Promedio mensual reportado:** $35.031,95.
+* **Mes con mayores ingresos:** junio de 2025, con $64.571,88.
+* **Mes con menores ingresos:** julio de 2024, con $10.835,49.
 
-### Revenue performance
+Los ingresos presentan variaciones importantes a lo largo del periodo analizado. Junio de 2025 registra el mejor desempeño mensual, mientras que julio de 2024 presenta la menor facturación.
 
-* **Total revenue:** $875,798.71.
-* **Average monthly revenue:** $35,031.95.
-* **Highest-revenue month:** June 2025, with $64,571.88.
-* **Lowest-revenue month:** July 2024, with $10,835.49.
+**Oportunidad de negocio:** investigar los factores asociados a los meses de mayor y menor desempeño para mejorar la planificación comercial.
 
-Revenue fluctuates considerably throughout the period. June 2025 represents the strongest month, while July 2024 records the lowest revenue. Investigating seasonality, demand patterns and order activity could help explain these variations.
+### 5.2. Ingresos por categoría
 
-### Revenue by product category
-
-| Category               |     Revenue |
+| Categoría              |    Ingresos |
 | ---------------------- | ----------: |
-| Home & Kitchen         | $137,363.66 |
-| Sports & Outdoors      | $135,881.01 |
-| Toys & Games           | $132,302.32 |
-| Clothing               | $126,662.31 |
-| Beauty & Personal Care | $118,815.98 |
-| Electronics            | $117,818.16 |
-| Books                  | $106,955.27 |
+| Home & Kitchen         | $137.363,66 |
+| Sports & Outdoors      | $135.881,01 |
+| Toys & Games           | $132.302,32 |
+| Clothing               | $126.662,31 |
+| Beauty & Personal Care | $118.815,98 |
+| Electronics            | $117.818,16 |
+| Books                  | $106.955,27 |
 
-**Home & Kitchen** is the leading category by revenue, while **Books** records the lowest revenue among the seven categories.
+**Hallazgo:** Home & Kitchen es la categoría con mayores ingresos, mientras que Books presenta la menor facturación.
 
-These figures measure sales revenue rather than net profitability. Cost and margin data would be required to determine which category is the most profitable.
+Estos resultados representan ingresos por ventas, no rentabilidad neta. Para determinar qué categoría genera mayor beneficio, sería necesario incorporar información sobre costos y márgenes.
 
-### Top-performing products
+### 5.3. Productos con mayores ingresos
 
-| Rank | Product         |    Revenue |
-| ---: | --------------- | ---------: |
-|    1 | Yoga Mat        | $35,373.00 |
-|    2 | Building Blocks | $29,079.63 |
-|    3 | Monitor         | $28,971.80 |
-|    4 | Keyboard        | $27,712.45 |
-|    5 | Lamp            | $26,686.22 |
+| Posición | Producto        |   Ingresos |
+| -------: | --------------- | ---------: |
+|        1 | Yoga Mat        | $35.373,00 |
+|        2 | Building Blocks | $29.079,63 |
+|        3 | Monitor         | $28.971,80 |
+|        4 | Keyboard        | $27.712,45 |
+|        5 | Lamp            | $26.686,22 |
 
-Yoga Mat leads product revenue and also records the highest number of units sold, with 130 units.
+**Hallazgo:** Yoga Mat lidera la generación de ingresos entre los productos analizados y también registra el mayor número de unidades vendidas, con 130 unidades.
 
-### Lowest-revenue products
+### 5.4. Productos con menores ingresos
 
-| Product   |   Revenue |
+| Producto  |  Ingresos |
 | --------- | --------: |
-| Charger   |   $506.60 |
-| RC Car    |   $776.05 |
-| Guidebook | $1,051.39 |
-| Comic     | $1,624.52 |
-| Art Set   | $1,828.60 |
+| Charger   |   $506,60 |
+| RC Car    |   $776,05 |
+| Guidebook | $1.051,39 |
+| Comic     | $1.624,52 |
+| Art Set   | $1.828,60 |
 
-Charger has the lowest revenue among the products analyzed. This finding provides an opportunity to investigate pricing, customer demand, product availability and sales performance before making commercial decisions.
+Charger presenta los menores ingresos. Este resultado permite identificar un producto cuyo desempeño merece una revisión adicional antes de tomar decisiones sobre precios, promociones o permanencia en el catálogo.
 
-### Highest-value customers
+### 5.5. Clientes de mayor valor
 
-| Customer      | Total purchases | Revenue share |
-| ------------- | --------------: | ------------: |
-| Beth Daniels  |      $13,802.34 |         1.58% |
-| Mark Brown    |      $13,711.83 |         1.57% |
-| Barbara Parks |      $12,076.32 |         1.38% |
-| Donald Shah   |       $9,985.81 |         1.14% |
-| Anita Baxter  |       $9,784.54 |         1.12% |
+| Cliente       | Ingresos acumulados | Participación |
+| ------------- | ------------------: | ------------: |
+| Beth Daniels  |          $13.802,34 |        1,58 % |
+| Mark Brown    |          $13.711,83 |        1,57 % |
+| Barbara Parks |          $12.076,32 |        1,38 % |
+| Donald Shah   |           $9.985,81 |        1,14 % |
+| Anita Baxter  |           $9.784,54 |        1,12 % |
 
-Beth Daniels is the highest-value customer by cumulative purchase amount, followed closely by Mark Brown.
+**Hallazgo:** Beth Daniels es la cliente con mayores ingresos acumulados, seguida de cerca por Mark Brown.
 
-Together, the results demonstrate how customer-level aggregation and window functions can identify valuable customers and quantify their contribution to total revenue.
+El cálculo de participación permite medir cuánto aporta cada cliente a los ingresos totales e identificar oportunidades para desarrollar estrategias de fidelización.
 
-### Customer repeat purchase rate
+### 5.6. Tasa de recompra
 
-| KPI                         |    Result |
-| --------------------------- | --------: |
-| Customers who purchased     |       197 |
-| Repeat customers            |       184 |
-| Customers with one purchase |        13 |
-| **Repeat purchase rate**    | **93.4%** |
+| Indicador                       |  Resultado |
+| ------------------------------- | ---------: |
+| Clientes que realizaron compras |        197 |
+| Clientes recurrentes            |        184 |
+| Clientes con una sola compra    |         13 |
+| **Tasa de recompra**            | **93,4 %** |
 
-The repeat purchase rate is calculated as the proportion of purchasing customers who placed at least two distinct orders.
+La tasa de recompra se calculó como el porcentaje de clientes compradores que realizaron al menos dos pedidos diferentes.
 
-This indicates a high level of repeat purchasing within the observed dataset. Further analysis of purchase frequency, time between orders and customer recency would help evaluate customer retention more comprehensively.
+El resultado refleja una elevada proporción de clientes recurrentes dentro de los datos analizados. Para comprender mejor la retención, sería conveniente complementar este indicador con la frecuencia de compra y el tiempo transcurrido entre pedidos.
 
-### Inventory analysis
+### 5.7. Análisis de inventario
 
-| Product           | Stock available |
-| ----------------- | --------------: |
-| Poetry Collection |               3 |
-| Coffee Maker      |               9 |
-| Comic             |              10 |
-| Jacket            |             500 |
+| Producto          | Existencias |
+| ----------------- | ----------: |
+| Poetry Collection |           3 |
+| Coffee Maker      |           9 |
+| Comic             |          10 |
+| Jacket            |         500 |
 
-Poetry Collection, Coffee Maker and Comic have the lowest stock levels, while Jacket has the highest inventory among the products examined.
+Poetry Collection, Coffee Maker y Comic presentan los niveles de inventario más bajos. Por otro lado, Jacket registra las mayores existencias entre los productos analizados.
 
-Low stock does not necessarily imply a shortage. The next step is to compare available inventory against sales velocity, supplier lead times and expected demand.
+**Oportunidad de negocio:** contrastar las existencias con la velocidad de venta, los tiempos de reposición y la demanda esperada para identificar posibles riesgos de desabastecimiento o exceso de inventario.
 
-## 💡 6. Business Recommendations
+## 💡 6. Recomendaciones de negocio
 
-### 1. Improve revenue planning
+### 1. Mejorar la planificación de ventas
 
-Investigate the months with unusually high and low revenue, identify seasonal patterns, and use historical results to plan campaigns and inventory availability.
+Analizar los meses con variaciones significativas en los ingresos e identificar posibles patrones estacionales para planificar campañas y disponibilidad de productos.
 
-### 2. Optimize category performance
+### 2. Optimizar el desempeño por categoría
 
-Build on the strong revenue contribution of Home & Kitchen while investigating the sales drivers behind Books. Incorporate product costs and margins before making profitability-related decisions.
+Profundizar en los factores que explican el buen desempeño de Home & Kitchen y evaluar oportunidades para mejorar la facturación de Books. Incorporar costos y márgenes antes de concluir cuál es la categoría más rentable.
 
-### 3. Strengthen product strategy
+### 3. Fortalecer la estrategia de productos
 
-Maintain visibility into high-performing products such as Yoga Mat. Investigate low-revenue products such as Charger to determine whether pricing adjustments, promotions or assortment changes are justified.
+Mantener seguimiento sobre productos destacados como Yoga Mat e investigar el bajo desempeño de Charger para determinar si se justifican acciones comerciales.
 
-### 4. Develop customer retention strategies
+### 4. Desarrollar estrategias de fidelización
 
-Use the customer revenue ranking to identify high-value buyers and design targeted loyalty initiatives. Complement revenue with frequency and recency metrics to develop a more complete customer segmentation.
+Identificar clientes de alto valor y diseñar acciones de fidelización. Complementar los ingresos acumulados con métricas de frecuencia y recencia para comprender mejor el comportamiento de compra.
 
-### 5. Improve inventory management
+### 5. Optimizar la gestión del inventario
 
-Review Poetry Collection, Coffee Maker and Comic against recent demand and replenishment lead times. Establish reorder points and monitor products with potentially excessive stock, including Jacket.
+Revisar los niveles de existencias de Poetry Collection, Coffee Maker y Comic, teniendo en cuenta la demanda y los tiempos de reposición. Establecer niveles mínimos de inventario según el comportamiento de las ventas.
 
-## 🧱 7. Analytical Workflow
+## ⚙️ 7. Flujo de trabajo
 
 ```text
-SQLite Database
-       ↓
-Database Exploration
-       ↓
-Relational Joins
-       ↓
-Revenue & KPI Calculations
-       ↓
-Aggregations by Month, Category,
-Product and Customer
-       ↓
-CTEs & Window Functions
-       ↓
-Business Findings
-       ↓
-Recommendations
+Base de datos SQLite
+        ↓
+Exploración de tablas
+        ↓
+Relación de datos mediante JOIN
+        ↓
+Cálculo de ingresos e indicadores
+        ↓
+Análisis por mes, categoría,
+producto y cliente
+        ↓
+CTE y funciones de ventana
+        ↓
+Identificación de hallazgos
+        ↓
+Recomendaciones de negocio
 ```
 
-## 🛠️ 8. Tools & Skills
+## 🛠️ 8. Herramientas y habilidades
 
-**Tools**
+**Herramientas utilizadas**
 
 * SQL
 * SQLite
@@ -247,46 +244,46 @@ Recommendations
 * sqlite3
 * Google Colab
 
-**Technical skills**
+**Habilidades técnicas**
 
-* Relational database querying
-* Multi-table joins
-* Aggregations and grouping
-* Common Table Expressions (CTEs)
-* Window functions and ranking
-* Date-based analysis
-* Null handling
-* KPI calculation
-* Customer and product performance analysis
+* Consulta y exploración de bases de datos relacionales.
+* Unión de múltiples tablas.
+* Agregación y agrupación de información.
+* Expresiones de tabla comunes (CTE).
+* Funciones de ventana y clasificación.
+* Análisis temporal.
+* Tratamiento de valores nulos.
+* Cálculo de indicadores clave de desempeño (KPI).
+* Análisis de ventas, clientes e inventario.
 
-**Business skills**
+**Habilidades de negocio**
 
-* Business problem definition
-* Revenue analysis
-* Customer segmentation foundations
-* Inventory analysis
-* Insight communication
-* Data-driven recommendations
+* Definición de problemas de negocio.
+* Análisis del desempeño comercial.
+* Identificación de clientes de mayor valor.
+* Evaluación del comportamiento de recompra.
+* Interpretación de resultados.
+* Formulación de recomendaciones basadas en datos.
 
-## 🏁 9. Conclusion
+## 🏁 9. Conclusión
 
-This project demonstrates how SQL can transform relational e-commerce data into actionable business insights.
+Este proyecto demuestra cómo SQL permite transformar datos relacionales de comercio electrónico en información relevante para la toma de decisiones.
 
-By combining multiple tables, calculating revenue metrics and applying window functions, the analysis identifies high-performing categories, leading products, valuable customers, repeat purchase behavior and potential inventory risks.
+Mediante consultas, uniones de tablas, agregaciones, CTE y funciones de ventana, fue posible identificar categorías con mayores ingresos, productos destacados, clientes de alto valor, comportamiento de recompra y oportunidades para mejorar la gestión del inventario.
 
-The project highlights an essential data analytics skill: connecting technical querying with business questions and translating the results into practical recommendations.
+El proyecto refleja una habilidad fundamental para un analista de datos: **conectar las herramientas técnicas con preguntas de negocio y convertir los resultados del análisis en recomendaciones accionables.**
 
 ---
 
-## 👨‍💻 About Me
+## 👨‍💻 Sobre mí
 
 **Sergio Iván Ramírez Moreno**
-Aspiring Data Analyst | Mechanical Engineer | Project Management Specialist
+Analista de Datos en formación | Ingeniero Mecánico | Especialista en Gerencia de Proyectos
 
-I am developing my data analytics portfolio through practical projects focused on SQL, Python, business intelligence and data-driven decision-making.
+Estoy desarrollando mi portafolio mediante proyectos prácticos enfocados en SQL, Python, análisis de datos e inteligencia de negocios, con el objetivo de apoyar la toma de decisiones basada en evidencia.
 
 * **GitHub:** [sergioingmeca-cyber](https://github.com/sergioingmeca-cyber)
 * **LinkedIn:** [Sergio Ramírez](https://www.linkedin.com/in/sergio-ramirez-b72744343/)
-* **Portfolio:** [Data Analyst Portfolio](https://sergioingmeca-cyber.github.io/portafolio/)
+* **Portafolio:** [Mi portafolio como analista de datos](https://sergioingmeca-cyber.github.io/portafolio/)
 
-**Thanks for visiting this project!**
+¡Gracias por visitar mi proyecto!
